@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:8.0
+    volumes:
+      - mysql_data:/var/lib/mysql
+    restart: always
+    environment:
+      MYSQL_DATABASE: project_20
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3307:3306"  # Map host port 3307 to container port 3306
+
+  web:
+    build: .
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+
+volumes:
+  mysql_data:
