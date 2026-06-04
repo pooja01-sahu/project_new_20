@@ -108,7 +108,7 @@ DATABASES = {
         'NAME': 'project_20',
         'USER': 'root',
         'PASSWORD': 'root',
-        'HOST': 'db',
+        'HOST': 'database',
         'PORT': '3306',
     }
 }
