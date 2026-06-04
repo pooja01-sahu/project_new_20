@@ -1,5 +1,4 @@
 version: '3.8'
-
 services:
   db:
     image: mysql:8.0
@@ -10,7 +9,9 @@ services:
       MYSQL_DATABASE: project_20
       MYSQL_ROOT_PASSWORD: root
     ports:
-      - "3307:3306"  # Map host port 3307 to container port 3306
+      - "3307:3306"
+    networks:
+      - app-network
 
   web:
     build: .
@@ -18,6 +19,19 @@ services:
       - .:/app
     ports:
       - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      - DB_HOST=db
+      - DB_NAME=project_20
+      - DB_USER=root
+      - DB_PASSWORD=root
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
 
 volumes:
   mysql_data:
