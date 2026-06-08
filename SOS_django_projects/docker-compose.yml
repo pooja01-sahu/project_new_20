@@ -1,37 +1,37 @@
 version: '3.8'
-services:
-  db:
-    image: mysql:8.0
-    volumes:
-      - mysql_data:/var/lib/mysql
-    restart: always
-    environment:
-      MYSQL_DATABASE: project_20
-      MYSQL_ROOT_PASSWORD: root
-    ports:
-      - "3307:3306"
-    networks:
-      - app-network
 
+services:
   web:
-    build: .
-    volumes:
-      - .:/app
+    image: sos_django_projects-web:latest
+    container_name: sos_django_projects-web-1
     ports:
       - "8000:8000"
-    depends_on:
-      - db
     environment:
-      - DB_HOST=db
-      - DB_NAME=project_20
-      - DB_USER=root
-      - DB_PASSWORD=root
-    networks:
-      - app-network
+      - DB_HOST=database
+      - DB_NAME=your_db_name
+      - DB_USER=your_db_user
+      - DB_PASSWORD=your_db_password
+    depends_on:
+      database:
+        condition: service_healthy
+    restart: always
 
-networks:
-  app-network:
-    driver: bridge
+  database:
+    image: mysql:8.0
+    container_name: sos_django_projects-db-1
+    environment:
+      MYSQL_DATABASE: your_db_name
+      MYSQL_USER: your_db_user
+      MYSQL_PASSWORD: your_db_password
+      MYSQL_ROOT_PASSWORD: your_root_password
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: always
 
 volumes:
   mysql_data:
