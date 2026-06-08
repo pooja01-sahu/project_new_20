@@ -206,3 +206,13 @@ class TimeTable(DropdownItem, models.Model):
 
     class Meta:
         db_table = "sos_timetable"
+
+class CollegeSystem(DropdownItem,models.Model):
+    student_name = models.CharField(max_length=100)
+    branch = models.CharField(max_length=100)
+    semester = models.IntegerField()
+    cgpa = models.FloatField()
+
+    class Meta:
+        db_table = "sos_collegesystem"
+
