@@ -6,8 +6,20 @@ from .BaseCtl import BaseCtl
 from ..utility.DataValidator import DataValidator
 from service.service.SecurityAlertService import SecurityAlertService
 
+from ..utility.HtmlUtility import HtmlUtility
+
 
 class SecurityAlertCtl(BaseCtl):
+
+    def preload(self, request):
+        status_list = ["Active", "Inactive"]
+
+        self.preload_data["status_list"] = HtmlUtility.get_list_from_list(
+            "status",
+            self.form.get("status"),
+            status_list
+        )
+        return self.preload_data
 
     def request_to_form(self, request_form):
         self.form["id"] = request_form.get("id", 0)
@@ -52,19 +64,19 @@ class SecurityAlertCtl(BaseCtl):
 
     def display(self, request, params={}):
         security_id = int(params.get("id", 0))
-        print("security id",security_id)
+        print("security id", security_id)
         if security_id > 0:
             security = self.get_service().get(security_id)
             print("Security Object =", security)
             self.model_to_form(security)
 
-        res = render(request, self.get_template(), {"form": self.form})
+        res = render(request, self.get_template(), {"form": self.form, "preload_data": self.preload(request)})
         return res
 
     def submit(self, request, params={}):
-        pk = int(self.form.get('id',0))
+        pk = int(self.form.get('id', 0))
 
-        duplicate = self.get_service().get_model().objects.filter(threat_level = self.form.get("threat_level",""))
+        duplicate = self.get_service().get_model().objects.filter(threat_level=self.form.get("threat_level", ""))
 
         if pk > 0:
             duplicate = duplicate.exclude(id=pk)
@@ -78,12 +90,12 @@ class SecurityAlertCtl(BaseCtl):
             self.form["id"] = security.id
             self.form["error"] = False
 
-            if pk > 0 :
+            if pk > 0:
                 self.form["message"] = "Security Updated Successfully"
             else:
                 self.form["message"] = "Security Added Successfully"
 
-        res = render(request,self.get_template(), {"form": self.form})
+        res = render(request, self.get_template(), {"form": self.form, "preload_data": self.preload(request)})
 
         return res
 
@@ -92,11 +104,3 @@ class SecurityAlertCtl(BaseCtl):
 
     def get_service(self):
         return SecurityAlertService()
-
-
-
-
-
-
-
-

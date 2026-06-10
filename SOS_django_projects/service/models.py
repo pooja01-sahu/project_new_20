@@ -222,6 +222,12 @@ class SecurityAlert(DropdownItem,models.Model):
     detected_time = models.DateField()
     status = models.CharField(max_length=100)
 
+    def get_key(self):
+        return self.id
+
+    def get_value(self):
+        return self.status
+
     class Meta:
         db_table = "sos_security_alert"
 
