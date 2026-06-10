@@ -1,0 +1,126 @@
+{% include "./Header.html"%}
+<br>
+<div class="container">
+    <form method="POST">
+        <div class="card mb-3">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0"><i class="fas fa-user-tag"></i> Security List</h5>
+                <a href="/ORS/SecurityAlert" class="btn btn-success btn-sm">
+                    <i class="fas fa-plus-circle"></i> Add Security
+                </a>
+            </div>
+
+            <div class="card-body">
+                <div class="form-row align-items-end">
+
+                    <div class="col-lg-3 col-md-4 mb-2">
+                        <label class="small mb-1">Threat Level</label>
+                        <input class="form-control form-control-sm" name="threat_level"
+                               value="{{form.threat_level}}" placeholder="Threat level">
+                    </div>
+
+
+                    <div class="col-lg-4 col-md-4 mb-2">
+                        <label class="small mb-1">Source Ip</label>
+                        <input class="form-control form-control-sm" name="source_ip"
+                               value="{{form.source_ip}}" placeholder="source ip">
+                    </div>
+
+                    <div class="col-lg-4 col-md-4 mb-2">
+                        <label class="small mb-1">Status</label>
+                        <input class="form-control form-control-sm" name="status"
+                               value="{{form.status}}" placeholder="status">
+                    </div>
+
+                    <div class="col-lg-2 col-md-4 mb-2">
+                        <button type="submit" name="operation" value="Search"
+                                class="btn btn-primary btn-sm btn-block">
+                            <i class="fas fa-search"></i> Search
+                        </button>
+                    </div>
+                    <div class="col-lg-2 col-md-4 mb-2">
+                        <button type="submit" name="operation" value="Reset"
+                                class="btn btn-secondary btn-sm btn-block">
+                            <i class="fas fa-undo"></i> Reset
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-sm table-bordered table-hover table-responsive-sm">
+
+                    <thead class="thead-dark text-center">
+                    <th scope="col">#</th>
+                    <th scope="col">Threat Level</th>
+                    <th scope="col">Source Ip</th>
+                    <th scope="col">Detected Time</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">ACTION</th>
+                    </thead>
+
+                    <tbody class="text-center">
+
+                    {% for e in page_list %}
+                    <tr>
+                        <td>{{ form.start_index|add:forloop.counter }}</td>
+                        <td>{{e.threat_level}}</td>
+                        <td>{{e.source_ip}}</td>
+                        <td>{{e.detected_time}}</td>
+                        <td>{{e.status}}</td>
+
+                        <td>
+                            <a href="/ORS/SecurityAlert/{{e.id}}" class="btn btn-primary btn-sm">
+                                <i class="fas fa-edit"></i>
+                            </a>
+
+                            <a href="/ORS/SecurityAlertList/delete/{{e.id}}" class="btn btn-danger btn-sm">
+                                <i class="fas fa-trash"></i>
+                            </a>
+                        </td>
+
+                    </tr>
+
+                    {% empty %}
+                    <tr>
+                        <td colspan="4" class="text-center text-muted p-3">
+                            No Records Found
+                        </td>
+                    </tr>
+                    {% endfor %}
+
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+
+        <div class="row mt-3">
+            <div class="col-md-12 d-flex justify-content-between align-items-center">
+
+                <button type="submit" name="operation" value="Previous"
+                        class="btn btn-secondary btn-sm"
+                        {% if not form.has_previous %}disabled{% endif %}>
+                    <i class="fas fa-arrow-left"></i> Previous
+                </button>
+
+                <span class="font-weight-bold">
+                    Page : {{form.page_no}}
+                </span>
+
+                <button type="submit" name="operation" value="Next"
+                        class="btn btn-secondary btn-sm"
+                        {% if not form.has_next %}disabled{% endif %}>
+                    Next <i class="fas fa-arrow-right"></i>
+                </button>
+
+            </div>
+        </div>
+
+    </form>
+</div>
+
+{% include "./Footer.html" %}

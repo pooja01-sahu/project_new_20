@@ -32,6 +32,8 @@ from ORS.ctl.ForgetPasswordCtl import ForgetPasswordCtl
 from ORS.ctl.ChangePasswordCtl import ChangePasswordCtl
 from ORS.ctl.CollegeSystemCtl import CollegeSystemCtl
 from ORS.ctl.CollegeSystemListCtl import CollegeSystemListCtl
+from ORS.ctl.SecurityAlertCtl import SecurityAlertCtl
+from ORS.ctl.SecurityAlertListCtl import SecurityAlertListCtl
 
 
 
