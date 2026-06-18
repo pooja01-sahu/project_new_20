@@ -1,0 +1,14 @@
+<div *ngIf="isLogin()">
+    <h3><b>Hi, {{form.data.name }}</b></h3>
+    <a href="welcome"><b>Add User</b></a> <b> | </b>
+    <a href="login"><b>User List</b></a> <b> | </b>
+    <a (click)="logout()">
+        <font color="blue"><b>Logout</b></font>
+    </a>
+</div>
+<div *ngIf="!isLogin()">
+    <h3>Hi, Guest</h3>
+    <a href="welcome"><b>Welcome</b></a> <b> | </b>
+    <a href="login"><b>Login</b></a>
+</div>
+<hr>

@@ -1,0 +1,22 @@
+<app-navbar></app-navbar>
+<div align="center">
+    <h1>Login</h1>
+    {{ form.message }}
+    <table>
+        <tr>
+            <th>Login ID: </th>
+            <td><input type="text" name="loginId" [(ngModel)]="form.data.loginId"> </td>
+        </tr>
+        <tr>
+            <th>Password: </th>
+            <td><input type="text" name="password" [(ngModel)]="form.data.password"> </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>
+                <button (click)="signIn()">signIn</button>&nbsp;
+                <button (click)="signUp()">signUp</button>
+            </td>
+        </tr>
+    </table>
+</div>
